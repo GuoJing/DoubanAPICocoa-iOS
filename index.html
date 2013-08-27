@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Doubanapicocoa-ios by GuoJing</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Doubanapicocoa-ios</h1>
+        <h2>Douban api for cocoa, Very simple and easy to use. Support OS X Now.</h2>
+        <a href="https://github.com/GuoJing/DoubanAPICocoa-iOS" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2>
+<a name="%E6%A6%82%E8%A6%81" class="anchor" href="#%E6%A6%82%E8%A6%81"><span class="octicon octicon-link"></span></a>概要</h2>
+
+<p>DoubanAPICocoa是一个Cocoa封装的豆瓣API库，非官方版，可以使用于iOS，并支持iOS6及之后的版本。<a href="https://github.com/GuoJing/DoubanAPICocoa-OSX">OS X 版本可参考这里</a></p>
+
+<p>DoubanAPICocoa的底层支持并兼容老版本的<a href="https://github.com/lincode/douban-objc-client">douban-objc-client</a>，熟悉<a href="https://github.com/lincode/douban-objc-client">douban-objc-client</a>开发的同学也可以不用更新代码，直接移植到新的库里并且编译通过。但推荐使用DoubanAPICocoa提供的DOUEngine来实现代码。</p>
+
+<p>注意：示例请自行替换apiKey，并且自行申请相关权限，如豆邮和线上活动以及更多高级的功能。</p>
+
+<h3>
+<a name="%E7%9B%AE%E7%9A%84" class="anchor" href="#%E7%9B%AE%E7%9A%84"><span class="octicon octicon-link"></span></a>目的</h3>
+
+<ol>
+<li>使开发更加容易，不用关注网络层的细节</li>
+</ol><h3>
+<a name="%E7%89%B9%E7%82%B9" class="anchor" href="#%E7%89%B9%E7%82%B9"><span class="octicon octicon-link"></span></a>特点</h3>
+
+<ol>
+<li>封装网络层</li>
+<li>简单</li>
+<li>使用闭包让开发者开发更简单</li>
+<li>All consts</li>
+<li>No Warning, No Error and No Build Analyze Errors</li>
+</ol><h3>
+<a name="%E6%A0%B7%E4%BE%8B" class="anchor" href="#%E6%A0%B7%E4%BE%8B"><span class="octicon octicon-link"></span></a>样例</h3>
+
+<h4>
+<a name="%E9%AA%8C%E8%AF%81" class="anchor" href="#%E9%AA%8C%E8%AF%81"><span class="octicon octicon-link"></span></a>验证</h4>
+
+<p>声明一个engine：</p>
+
+<pre><code>engine = [[DOUEngine alloc] initWithApiKey:kAPIKey withSecretKey:kPrivateKey withRedirUrl:kRedirectUrl];
+</code></pre>
+
+<p>打开豆瓣验证url：</p>
+
+<pre><code>NSString *url_str = [self.engine getConnectUrl];
+</code></pre>
+
+<p>从豆瓣返回code并初始化engine：</p>
+
+<pre><code>[self.engine didLoadWithCode:code];
+</code></pre>
+
+<p>验证通过。</p>
+
+<h4>
+<a name="%E6%88%91%E6%98%AF%E8%B0%81" class="anchor" href="#%E6%88%91%E6%98%AF%E8%B0%81"><span class="octicon octicon-link"></span></a>我是谁</h4>
+
+<pre><code>[u getWhoAmI:successUserBlock failedBlock:failBlock];
+</code></pre>
+
+<h4>
+<a name="%E5%8F%91%E5%B9%BF%E6%92%AD" class="anchor" href="#%E5%8F%91%E5%B9%BF%E6%92%AD"><span class="octicon octicon-link"></span></a>发广播</h4>
+
+<pre><code>DOUBroadcastEngine *s = [self.engine getEngine:kDOUBroadcast];
+[s say:self.shuo_field.title successBlock:successBlock failedBlock:failBlock];
+</code></pre>
+
+<h4>
+<a name="%E8%8E%B7%E5%8F%96%E5%90%8C%E5%9F%8E%E6%B4%BB%E5%8A%A8" class="anchor" href="#%E8%8E%B7%E5%8F%96%E5%90%8C%E5%9F%8E%E6%B4%BB%E5%8A%A8"><span class="octicon octicon-link"></span></a>获取同城活动</h4>
+
+<pre><code>DOUEventEngine *event_engine = [self.engine getEngine:kDOUEvent];
+[event_engine getEventWithRemoteID:self.eid_field.title successBlock:successBlock failedBlock:failedBlock];
+</code></pre>
+
+<h3>
+<a name="%E5%8F%98%E9%87%8F" class="anchor" href="#%E5%8F%98%E9%87%8F"><span class="octicon octicon-link"></span></a>变量</h3>
+
+<p>该库封装了常用的变量，比如发日记如果是发私有的日记，可以直接使用kDOUPrivacyPrivate，同样相册的排序方式可以使用kDOUOrderDesc，无需自己写变量。</p>
+
+<p>常用的变量文件在库的Engine/Utils里。</p>
+
+<ol>
+<li>DOUAPIConsts.h</li>
+<li>DOUAPIConsts.h</li>
+<li>DOUAPIErrorConsts.h</li>
+</ol><h3>
+<a name="%E5%BC%80%E5%8F%91" class="anchor" href="#%E5%BC%80%E5%8F%91"><span class="octicon octicon-link"></span></a>开发</h3>
+
+<p>这个库支持最老的底层的实现方法，也可以非常容易的使用engine进行api开发，可以通过kDOU产品线获得相应的engine，每个engine都有getEngine方法。不过推荐在外面包装一个单例的共享engine，方便在代码各处使用。</p>
+
+<p>可以删除任意不需要的模块并重新打包和分发，减少代码。</p>
+
+<h3>
+<a name="%E7%A4%BA%E4%BE%8B" class="anchor" href="#%E7%A4%BA%E4%BE%8B"><span class="octicon octicon-link"></span></a>示例</h3>
+
+<p>大部分接口都有基本的示例，今后会提供更多更丰富的示例。</p>
+
+<h2>
+<a name="%E5%85%B6%E4%BB%96" class="anchor" href="#%E5%85%B6%E4%BB%96"><span class="octicon octicon-link"></span></a>其他</h2>
+
+<p><strong><a href="http://developers.douban.com/">豆瓣API</a></strong></p>
+
+<p><strong>并且该版本不支持GData等V1版本特性，只支持V2。</strong></p>
+
+<p>如果你需要iOS版本，请去:</p>
+
+<ol>
+<li>开发版：<a href="https://github.com/lincode/douban-objc-client">douban-objc-client</a>
+</li>
+<li>官方版：<a href="https://github.com/douban/douban-objc-client">douban-objc-client</a>
+</li>
+</ol><h2>
+<a name="%E4%BF%A1%E6%81%AF" class="anchor" href="#%E4%BF%A1%E6%81%AF"><span class="octicon octicon-link"></span></a>信息</h2>
+
+<p>当前版本V0.1.3，主要职责为兼容iOS版本并且封装网络层，今后使用的方法可能会不同。</p>
+
+<p>当前版本不支持GData等V1版本特性，只支持V2，所以必须使用https。</p>
+
+<p>当前版本只适用于64位版本，考虑到今后32位的Mac也不多，所以暂时不打算支持。</p>
+
+<h2>
+<a name="%E4%BD%BF%E7%94%A8" class="anchor" href="#%E4%BD%BF%E7%94%A8"><span class="octicon octicon-link"></span></a>使用</h2>
+
+<h3>
+<a name="sample%E6%88%91%E8%BF%98%E5%9C%A8%E5%81%9A" class="anchor" href="#sample%E6%88%91%E8%BF%98%E5%9C%A8%E5%81%9A"><span class="octicon octicon-link"></span></a>Sample我还在做</h3>
+
+<h3>
+<a name="%E5%8F%91%E8%B5%B7%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82" class="anchor" href="#%E5%8F%91%E8%B5%B7%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E8%AF%B7%E6%B1%82"><span class="octicon octicon-link"></span></a>发起一个异步请求</h3>
+
+<pre><code>NSString *subPath = [NSString stringWithFormat:@"/v2/event/%d", event_id];
+
+DOUQuery *query = [[[DOUQuery alloc] initWithSubPath:subPath parameters:nil] autorelease];
+
+query.apiBaseUrlString = service.apiBaseUrlString;
+
+DOUHttpRequest *req = [DOUHttpRequest requestWithQuery:query target:self];
+
+DOUService *service = [DOUService sharedInstance];
+[service addRequest:req];
+</code></pre>
+
+<h2>
+<a name="%E5%8E%86%E5%8F%B2" class="anchor" href="#%E5%8E%86%E5%8F%B2"><span class="octicon octicon-link"></span></a>历史</h2>
+
+<p>v0.1</p>
+
+<ol>
+<li>发布一个移植版本。</li>
+</ol>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/GuoJing/DoubanAPICocoa-iOS/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/GuoJing/DoubanAPICocoa-iOS/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/GuoJing/DoubanAPICocoa-iOS"></a> is maintained by <a href="https://github.com/GuoJing">GuoJing</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("42721249");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
