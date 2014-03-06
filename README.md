@@ -112,3 +112,6 @@ DoubanAPICocoa的底层支持并兼容老版本的[douban-objc-client](https://g
 v0.1
 
 1. 发布一个移植版本。
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/GuoJing/doubanapicocoa-ios/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
