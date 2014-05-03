@@ -49,7 +49,8 @@
     [service get:query callback:completionBlock];
 }
 
-- (void)getLocListWithRemote:successBlock:(void(^)(DOULocArray *))successListBlock
+- (void)getLocListWithRemote:(NSString *)parent_id
+                successBlock:(void(^)(DOULocArray *))successListBlock
                  failedBlock:(void(^)(NSString *))failedListBlock{
     if(![self isServiceValid]) {
         if (failedListBlock) {

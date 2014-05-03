@@ -237,7 +237,7 @@ static DOUService *myInstance = nil;
     
     if (body && [body length] > 0) {
         NSData *objectData = [body dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *length = [NSString stringWithFormat:@"%d", [objectData length]];
+        NSString *length = [NSString stringWithFormat:@"%lu", (unsigned long)[objectData length]];
         [req appendPostData:objectData];
         [req addRequestHeader:@"Content-Length" value:length];
     }
@@ -263,7 +263,7 @@ static DOUService *myInstance = nil;
     
     if (body && [body length] > 0) {
         NSData *objectData = [body dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *length = [NSString stringWithFormat:@"%d", [objectData length]];
+        NSString *length = [NSString stringWithFormat:@"%lu", (unsigned long)[objectData length]];
         [req appendPostData:objectData];
         [req addRequestHeader:@"Content-Length" value:length];
     }
@@ -322,7 +322,7 @@ static DOUService *myInstance = nil;
   
   // request length
   NSData *postData = [req postBody];
-  [req addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%d", [postData length]]];
+  [req addRequestHeader:@"Content-Length" value:[NSString stringWithFormat:@"%lu", (unsigned long)[postData length]]];
   
   DOUOAuthStore *store = [DOUOAuthStore sharedInstance];
   if (store.userId != 0 && store.refreshToken && [store shouldRefreshToken]) {
@@ -375,7 +375,7 @@ static DOUService *myInstance = nil;
   if (body && [body length] > 0) {
     
     NSData *objectData = [body dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *length = [NSString stringWithFormat:@"%d", [objectData length]];
+    NSString *length = [NSString stringWithFormat:@"%lu", (unsigned long)[objectData length]];
     [req appendPostData:objectData];
     [req addRequestHeader:@"Content-Length" value:length];        
   }
